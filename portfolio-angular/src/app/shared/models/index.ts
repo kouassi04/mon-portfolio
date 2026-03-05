@@ -66,7 +66,7 @@ export interface Experience {
 export interface Stat {
   id: number;
   label: string;
-  valer: number;
+  valeur: number; // CORRECTION : 'valer' est devenu 'valeur'
   icone: string;
 }
 
@@ -90,7 +90,7 @@ export interface Article {
   tags: string;
   created_at: string;
   updated_at: string;
-  lien?: string; // <--- CORRECTION : Ajout de la propriété lien
+  lien?: string; 
 }
 
 export interface Profile {
