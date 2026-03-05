@@ -4,13 +4,14 @@ import os
 # Construction des chemins à l'intérieur du projet
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Clé de sécurité (ne pas partager en production)
-SECRET_KEY = 'django-insecure-e6i1y_6a*dve1vg5o!rnm=(5@*hh$c^jsxk)i2dj181yu$57vt'
+# SÉCURITÉ : Récupérer la clé secrète depuis l'environnement
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-default-key-for-dev')
 
-# Mode debug (True pour le développement)
-DEBUG = True
+# Mode debug : False en production pour la cybersécurité
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# Autoriser ton futur domaine Render
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
 
 # ─── APPLICATIONS INSTALLÉES ──────────────────────────────────────────────────
 INSTALLED_APPS = [
@@ -20,19 +21,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Tes applications tierces
-    'rest_framework',  # Pour créer les API
-    'corsheaders',     # Pour autoriser Angular
-    
-    # Ton application
+    'rest_framework',
+    'corsheaders',
     'api',
 ]
 
 # ─── MIDDLEWARE ───────────────────────────────────────────────────────────────
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',         # ⚠️ DOIT ÊTRE EN PREMIER !
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Ajouté pour les fichiers statiques en prod
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,56 +67,36 @@ DATABASES = {
     }
 }
 
-# Validation des mots de passe
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
 # ─── INTERNATIONALISATION ─────────────────────────────────────────────────────
 LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'Africa/Abidjan'
 USE_I18N = True
 USE_TZ = True
 
-# ─── FICHIERS STATIQUES (CSS, JS de l'admin) ──────────────────────────────────
+# ─── FICHIERS STATIQUES ───────────────────────────────────────────────────────
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# ─── MEDIA (Tes photos de profil, projets, CV...) ─────────────────────────────
-# C'est ici que Django va stocker les images uploadées
+# ─── MEDIA ────────────────────────────────────────────────────────────────────
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Configuration par défaut des IDs
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ─── CORS CONFIGURATION (Lien avec Angular) ───────────────────────────────────
-# Autorise ton frontend Angular (port 4200) à discuter avec Django
+# ─── CORS CONFIGURATION ───────────────────────────────────────────────────────
+# Ajoute ici l'URL de ton frontend Vercel une fois déployé
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:4200",
+    "https://mon-portfolio-angular.vercel.app", 
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-# ─── REST FRAMEWORK CONFIGURATION ─────────────────────────────────────────────
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-    ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.JSONParser',
-        'rest_framework.parsers.MultiPartParser',  # Important pour l'upload d'images
-        'rest_framework.parsers.FormParser',
-    ],
-}
-
-
-# ─── CONFIGURATION EMAIL (SMTP GMAIL) ─────────────────────────────────────────
+# ─── CONFIGURATION EMAIL (SÉCURISÉE) ──────────────────────────────────────────
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kouassisamuelo226@gmail.com' 
-EMAIL_HOST_PASSWORD = 'gofi ghbf dbkr xfkq' # <--- À REMPLACER
+# Récupérer le mot de passe d'application via une variable d'environnement
+EMAIL_HOST_PASSWORD = os.environ.get('gofi ghbf dbkr xfkq')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
