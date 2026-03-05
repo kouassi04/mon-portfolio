@@ -1,0 +1,85 @@
+<section class="portfolio" id="portfolio">
+  <div class="container d-flex flex-column justify-content-between h-100">
+
+    <div class="section-title flex-grow-1">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="text-center">
+            <h2 data-aos="heading-show" class="text_background">
+              Mes Projets
+              <span class="heading_background">Portfolio</span>
+            </h2>
+            <p class="m-0">Quelques réalisations représentatives de mon parcours</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="portfolio-filters text-center my-4" *ngIf="categories.length > 1">
+      <button
+        *ngFor="let cat of categories"
+        class="filter-btn"
+        [class.active]="activeCategory === cat"
+        (click)="filterBy(cat)">
+        {{ cat }}
+      </button>
+    </div>
+
+    <div class="section-content flex-grow-1">
+      <div class="row portfolio-items">
+
+        <ng-container *ngIf="filteredProjects.length; else portfolioLoader">
+          <div class="col-xl-4 col-lg-4 col-md-6 mb-4 mt-2"
+               *ngFor="let project of filteredProjects"
+               data-aos="fade-up">
+            <div class="portfolio-item">
+              <div class="item-box">
+                <div class="item-image">
+                  <img
+                    [src]="getImageUrl(project)"
+                    class="d-block img-fluid mx-auto"
+                    [alt]="project.titre"
+                  >
+                </div>
+                
+                <div class="item-details">
+                  <div class="item-details-ins text-center w-100 p-3">
+                    <span class="badge-cat">{{ project.categorie }}</span>
+                    <h3 class="mt-2">{{ project.titre }}</h3>
+                    
+                    <p class="project-resume mt-2">{{ project.resume }}</p>
+                    
+                    <div class="tech-stack mt-2">
+                      <span class="tech-tag">{{ project.technologies }}</span>
+                    </div>
+
+                    <div class="project-links mt-4">
+                      <a [href]="project.lien" target="_blank"
+                         class="btn-link live"
+                         *ngIf="project.lien">
+                        <i class="fas fa-external-link-alt"></i> Démo
+                      </a>
+                      <a [href]="project.lien_github" target="_blank"
+                         class="btn-link github"
+                         *ngIf="project.lien_github">
+                        <i class="fab fa-github"></i> Code
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-template #portfolioLoader>
+          <div class="col-xl-4 col-lg-4 col-md-6 mb-4 mt-2" *ngFor="let i of [1,2,3]">
+            <div class="skeleton-card"></div>
+          </div>
+        </ng-template>
+
+      </div>
+    </div>
+
+  </div>
+</section>

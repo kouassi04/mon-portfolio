@@ -1,0 +1,104 @@
+<section class="resume" id="resume">
+  <div class="container d-flex flex-column justify-content-between h-100">
+
+    <div class="section-title flex-grow-1">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="text-center">
+            <h2 data-aos="heading-show" class="text_background">
+              Mon Parcours
+              <span class="heading_background">Resume</span>
+            </h2>
+            <p class="m-0">Formation, expériences et compétences techniques</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-content flex-grow-1 mt-5">
+      <div class="row">
+
+        <!-- FORMATIONS -->
+        <div class="col-md-6" data-aos="fade-right">
+          <h4 class="resume-category mb-4">
+            <i class="fas fa-graduation-cap mr-2"></i> Formations
+          </h4>
+          <div class="timeline" *ngIf="educations.length; else eduLoader">
+            <div class="timeline-item" *ngFor="let edu of educations">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-period">{{ formatPeriod(edu.date_debut, edu.date_fin) }}</span>
+                <h5 class="timeline-title">{{ edu.diplome }}</h5>
+                <p class="timeline-sub">{{ edu.etablissement }}</p>
+                <p class="timeline-desc" *ngIf="edu.description">{{ edu.description }}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #eduLoader>
+            <div class="skeleton-timeline" *ngFor="let i of [1,2]"></div>
+          </ng-template>
+        </div>
+
+        <!-- EXPERIENCES -->
+        <div class="col-md-6" data-aos="fade-left">
+          <h4 class="resume-category mb-4">
+            <i class="fas fa-briefcase mr-2"></i> Expériences
+          </h4>
+          <div class="timeline" *ngIf="experiences.length; else expLoader">
+            <div class="timeline-item" *ngFor="let exp of experiences">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-period">{{ formatPeriod(exp.date_debut, exp.date_fin) }}</span>
+                <h5 class="timeline-title">{{ exp.role }}</h5>
+                <p class="timeline-sub">
+                  {{ exp.nom_entreprise }}
+                  <span class="badge badge-secondary ml-2">{{ exp.type_contrat }}</span>
+                </p>
+                <p class="timeline-desc">{{ exp.description }}</p>
+              </div>
+            </div>
+          </div>
+          <ng-template #expLoader>
+            <div class="skeleton-timeline" *ngFor="let i of [1,2,3]"></div>
+          </ng-template>
+        </div>
+
+      </div>
+
+      <!-- COMPETENCES -->
+      <div class="row mt-5">
+        <div class="col-md-6" data-aos="fade-up" *ngIf="devSkills.length">
+          <h4 class="resume-category mb-4">
+            <i class="fas fa-code mr-2"></i> Dev & Outils
+          </h4>
+          <div class="skill-item mb-3" *ngFor="let skill of devSkills">
+            <div class="d-flex justify-content-between mb-1">
+              <span><i [class]="skill.icone + ' mr-1'" *ngIf="skill.icone"></i>{{ skill.nom }}</span>
+              <span>{{ skill.niveau }}%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" [style.width]="skill.niveau + '%'"
+                   data-aos="progress-fill" [attr.data-aos-duration]="800"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="200" *ngIf="networkSkills.length">
+          <h4 class="resume-category mb-4">
+            <i class="fas fa-network-wired mr-2"></i> Réseaux
+          </h4>
+          <div class="skill-item mb-3" *ngFor="let skill of networkSkills">
+            <div class="d-flex justify-content-between mb-1">
+              <span><i [class]="skill.icone + ' mr-1'" *ngIf="skill.icone"></i>{{ skill.nom }}</span>
+              <span>{{ skill.niveau }}%</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-fill" [style.width]="skill.niveau + '%'"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

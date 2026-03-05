@@ -1,0 +1,280 @@
+// ─── VARIABLES (Couleurs Vives & Contrastées) ────────────────────────────────
+:root {
+  --accent: #ff6b51;              /* Orange vibrant */
+  --accent-glow: rgba(255, 107, 81, 0.4);
+  --dark: #0d1117;                /* Fond profond */
+  --text: #ffffff;                /* BLANC PUR (Vital pour la visibilité) */
+  --muted: #b0b0b0;               /* Gris clair pour les sous-titres */
+}
+
+// ─── LAYOUT GENERAL ──────────────────────────────────────────────────────────
+.home {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  background: var(--dark);
+  padding: 0;
+}
+
+// ─── ARRIERE PLAN ────────────────────────────────────────────────────────────
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.3;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.hero-glow {
+  position: absolute;
+  top: -20%;
+  right: 10%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(232, 97, 74, 0.15) 0%, transparent 60%);
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: pulseGlow 8s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+// ─── DECORATIONS ─────────────────────────────────────────────────────────────
+.deco-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.deco-line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.08);
+  &.line-1 { left: 15%; top: 0; bottom: 0; width: 1px; }
+  &.line-2 { left: 0; top: 15%; width: 30%; height: 1px; }
+}
+
+// ─── PHOTO (ZONE DROITE - AGRANDIE) ──────────────────────────────────────────
+.hero-photo-wrap {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 55%;          /* <--- MODIFIÉ ICI : Passé de 50% à 55% */
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-photo-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Coupe diagonale un peu plus prononcée pour suivre l'élargissement */
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+  filter: drop-shadow(-10px 0 20px rgba(0,0,0,0.5)); 
+}
+
+.hero-photo-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--dark) 0%, transparent 50%, rgba(0,0,0,0.2) 100%);
+  z-index: 6;
+}
+
+.hero-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top; 
+  filter: contrast(1.1) brightness(1.1) saturate(1.1);
+  position: relative;
+  z-index: 5;
+}
+
+// ─── TEXTE (ZONE GAUCHE - RÉDUITE) ───────────────────────────────────────────
+.hero-content {
+  position: relative;
+  z-index: 10;
+  width: 45%;          /* <--- MODIFIÉ ICI : Passé de 50% à 45% */
+  padding-left: 8%;    /* Légèrement réduit pour compenser */
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-label {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  
+  .label-line { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; }
+  .label-text { 
+    color: var(--accent); 
+    font-size: 14px; 
+    font-weight: 700; 
+    letter-spacing: 3px; 
+    text-transform: uppercase;
+    text-shadow: 0 0 10px var(--accent-glow);
+  }
+}
+
+.hero-role {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: var(--muted);
+  
+  .welcome-text-type {
+    color: #fff;
+    font-weight: 600;
+    margin-left: 8px;
+    border-bottom: 2px solid var(--accent);
+  }
+}
+
+// NOM
+.hero-name {
+  margin-bottom: 40px;
+  
+  .name-line-1 {
+    display: block;
+    font-size: clamp(3.5rem, 6vw, 5.5rem); /* Légèrement réduit le max pour s'adapter */
+    font-weight: 900;
+    color: var(--text);
+    line-height: 1;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.5);
+  }
+  
+  .name-line-2 {
+    display: block;
+    font-size: clamp(3.5rem, 6vw, 5.5rem); /* Idem */
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.3);
+  }
+}
+
+// ─── CTA & BOUTONS ───────────────────────────────────────────────────────────
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.cta-primary {
+  position: relative;
+  padding: 16px 40px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  overflow: hidden;
+  transition: 0.3s ease;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 0%; height: 100%;
+    background: var(--accent);
+    z-index: -1;
+    transition: 0.3s ease;
+  }
+  
+  &:hover {
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 20px var(--accent-glow);
+    &::before { width: 100%; }
+  }
+}
+
+// Réseaux sociaux
+.hero-socials {
+  display: flex; gap: 20px;
+  
+  .social-dot {
+    color: var(--muted);
+    font-size: 1.4rem;
+    transition: 0.3s;
+    &:hover { color: var(--accent); transform: translateY(-3px) scale(1.1); }
+  }
+}
+
+// ─── SCROLL & STATS ──────────────────────────────────────────────────────────
+.scroll-down {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  z-index: 20;
+}
+.scroll-mouse {
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+// Badge
+.hero-badge {
+  position: absolute;
+  bottom: 50px; left: 120px; /* Légèrement décalé */
+  z-index: 20;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: flex; gap: 10px; align-items: center;
+  
+  .badge-dot { width: 10px; height: 10px; background: #00ff88; border-radius: 50%; box-shadow: 0 0 10px #00ff88; }
+  .badge-text { color: #fff; font-size: 0.85rem; letter-spacing: 1px; }
+}
+
+// ─── RESPONSIVE (MOBILE) ─────────────────────────────────────────────────────
+@media (max-width: 991px) {
+  /* Sur mobile, on repasse en colonne, le ratio n'a plus d'importance */
+  .hero { flex-direction: column; }
+  
+  .hero-photo-wrap {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    opacity: 0.25;
+    clip-path: none;
+    z-index: 1;
+  }
+  
+  .hero-photo-frame::after {
+    background: linear-gradient(to bottom, var(--dark) 0%, transparent 50%, var(--dark) 100%);
+  }
+
+  .hero-content {
+    width: 100%;
+    padding: 0 20px;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+  }
+  
+  .hero-label { justify-content: center; }
+  .hero-actions { justify-content: center; }
+  .hero-badge { display: none; }
+}

@@ -1,0 +1,22 @@
+<footer class="horizontal-footer shadow-footer">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-12">
+        <div class="text-center">
+          
+          <ul class="social-icons list-inline mt-5" *ngIf="socials.length">
+            <li class="list-inline-item" *ngFor="let social of socials">
+              <a [href]="social.lien" target="_blank" [title]="social.nom_plateforme">
+                <i [class]="social.icone"></i>
+              </a>
+            </li>
+          </ul>
+
+          <p class="copyright-text mt-3 mb-5">
+            2026 ©. Portfolio de <b>Samuel Kouassi</b>. Étudiant à l'IIT.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

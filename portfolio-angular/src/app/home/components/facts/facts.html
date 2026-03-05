@@ -1,0 +1,39 @@
+<div class="section facts backgound-section" data-aos-id="facts">
+  <div class="container">
+    <div class="row">
+
+      <ng-container *ngIf="stats.length; else factsLoader">
+        <div class="col-lg-3 col-sm-6 mt-3 mt-lg-0" *ngFor="let stat of stats">
+          <div class="fact-single text-center">
+            <div class="fact-icon">
+              <span [class]="stat.icone || 'mbri-star'"></span>
+            </div>
+            <div class="fact-info">
+              <span class="tmcounter"
+                [attr.data-from]="0"
+                [attr.data-to]="stat.valeur"
+                data-speed="1500">
+                {{ stat.valeur }}
+              </span>+
+            </div>
+            <div class="fact-meta">
+              <span>{{ stat.label }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- Fallback si pas encore chargé -->
+      <ng-template #factsLoader>
+        <div class="col-lg-3 col-sm-6 mt-3 mt-lg-0" *ngFor="let i of [1,2,3,4]">
+          <div class="fact-single text-center">
+            <div class="skeleton-circle mx-auto mb-3"></div>
+            <div class="skeleton-line w-50 mx-auto mb-2"></div>
+            <div class="skeleton-line w-75 mx-auto"></div>
+          </div>
+        </div>
+      </ng-template>
+
+    </div>
+  </div>
+</div>

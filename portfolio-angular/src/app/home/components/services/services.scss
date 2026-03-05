@@ -1,0 +1,65 @@
+.services {
+  padding: 100px 0;
+  background-color: #0d1117; // Fond sombre comme l'intro
+  color: #fff;
+
+  .service-single {
+    background: rgba(255, 255, 255, 0.03); // Fond léger pour détacher les cartes
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 100%;
+
+    &:hover {
+      transform: translateY(-10px);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #ff6b51; // Ton orange d'accent
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      color: #ff6b51;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    p {
+      color: #b0b0b0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .service-tools {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 15px;
+      color: #ff6b51;
+      font-weight: 500;
+    }
+  }
+}
+
+// Styles pour les titres (cohérence avec intro/about)
+.text_background {
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.03);
+  position: relative;
+  .heading_background {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.5em;
+    color: #ff6b51;
+    white-space: nowrap;
+  }
+}
+
+// Styles pour le squelette (loader)
+.skeleton-circle { width: 50px; height: 50px; border-radius: 50%; background: rgba(255,255,255,0.05); }
+.skeleton-line { height: 15px; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 10px; }

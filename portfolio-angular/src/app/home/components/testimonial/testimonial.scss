@@ -1,0 +1,28 @@
+.testimonial-section {
+  background-color: #0d1117;
+  
+  .testimonial-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.3s;
+    
+    &:hover {
+      border-color: #ff6b51;
+      transform: translateY(-5px);
+    }
+  }
+  
+  .quote-icon {
+    color: #ff6b51;
+    font-size: 1.5rem;
+  }
+  
+  .text-orange {
+    color: #ff6b51;
+  }
+  
+  .user-avatar {
+    color: rgba(255, 255, 255, 0.2);
+  }
+}

@@ -1,0 +1,122 @@
+.portfolio {
+  padding: 100px 0;
+  background-color: #0d1117;
+
+  .filter-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 107, 81, 0.3);
+    color: #fff;
+    padding: 8px 20px;
+    margin: 0 5px;
+    border-radius: 30px;
+    transition: 0.3s;
+    font-weight: 500;
+    
+    &.active, &:hover {
+      background: #ff6b51;
+      border-color: #ff6b51;
+      box-shadow: 0 0 15px rgba(255, 107, 81, 0.4);
+    }
+  }
+
+  .portfolio-item {
+    border-radius: 15px;
+    overflow: hidden;
+    height: 300px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+
+    .item-box {
+      height: 100%;
+      width: 100%;
+    }
+
+    .item-image {
+      height: 100%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+    }
+
+    .item-details {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(13, 17, 23, 0.92);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transition: all 0.4s ease;
+      transform: translateY(20px);
+    }
+
+    &:hover {
+      .item-image img { transform: scale(1.1); }
+      .item-details { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge-cat {
+      background: #ff6b51;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    h3 { color: #fff; font-size: 1.4rem; font-weight: 700; }
+    
+    .project-resume {
+      color: #b0b0b0;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3; // <--- CORRECTION : Ajout de la propriété standard
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .tech-tag {
+      color: #ff6b51;
+      font-size: 0.75rem;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    .btn-link {
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 5px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: 0.3s;
+      display: inline-block;
+      
+      &.live {
+        background: #ff6b51;
+        color: #fff;
+        margin-right: 10px;
+        &:hover { background: #e85a40; }
+      }
+      
+      &.github {
+        border: 1px solid #fff;
+        color: #fff;
+        &:hover { background: #fff; color: #000; }
+      }
+    }
+  }
+}
+
+// Loader Skeleton
+.skeleton-card {
+  height: 300px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 15px;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0% {opacity: 0.5;} 50% {opacity: 1;} 100% {opacity: 0.5;} }

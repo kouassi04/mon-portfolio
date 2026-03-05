@@ -1,0 +1,54 @@
+.vision-banner {
+  padding: 100px 0;
+  background: linear-gradient(rgba(13, 17, 23, 0.8), rgba(13, 17, 23, 0.8)), 
+              url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80') center/cover;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+
+  .quote-icon {
+    font-size: 3rem;
+    color: #ff6b51;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+
+  .vision-text {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    font-style: italic;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.2;
+    
+    @media (max-width: 768px) {
+      font-size: 1.8rem;
+    }
+  }
+
+  .vision-line {
+    width: 60px;
+    height: 4px;
+    background: #ff6b51;
+    margin: 30px auto;
+    border-radius: 2px;
+  }
+
+  .vision-author {
+    color: #ff6b51;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .vision-tags {
+    .tag {
+      color: rgba(255, 255, 255, 0.4);
+      margin: 0 10px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.8rem;
+    }
+  }
+}
