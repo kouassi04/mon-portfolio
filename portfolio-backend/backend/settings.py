@@ -10,8 +10,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-default-key-fo
 # Mode debug : False en production pour la cybersécurité
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
-# Autoriser ton futur domaine Render
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com']
+# Autoriser ton domaine Render
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com', 'mon-portfolio-oxum.onrender.com']
 
 # ─── APPLICATIONS INSTALLÉES ──────────────────────────────────────────────────
 INSTALLED_APPS = [
@@ -27,12 +27,13 @@ INSTALLED_APPS = [
 ]
 
 # ─── MIDDLEWARE ───────────────────────────────────────────────────────────────
+# L'ordre est CRITIQUE ici pour résoudre l'erreur CORS
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',        # Doit impérativement être en premier
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Ajouté pour les fichiers statiques en prod
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # Pour les fichiers statiques en prod
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware',    # Doit être après CorsMiddleware
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -83,11 +84,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ─── CORS CONFIGURATION ───────────────────────────────────────────────────────
-# Ajoute ici l'URL de ton frontend Vercel une fois déployé
+# ─── CONFIGURATION CORS DYNAMIQUE ─────────────────────────────────────────────
+# Cette section lit tes réglages directement depuis l'interface Render
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
-    "https://mon-portfolio-angular.vercel.app", 
+    origin.strip() for origin in os.environ.get(
+        'CORS_ALLOWED_ORIGINS', 
+        'http://localhost:4200,https://mon-portfolio-rho-three.vercel.app'
+    ).split(',') if origin.strip()
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -97,6 +100,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kouassisamuelo226@gmail.com' 
-# Récupérer le mot de passe d'application via une variable d'environnement
-EMAIL_HOST_PASSWORD = os.environ.get('gofi ghbf dbkr xfkq')
+# Récupérer le mot de passe d'application via variable d'environnement
+EMAIL_HOST_PASSWORD = os.environ.get('GMAIL_APP_PASSWORD', 'gofi ghbf dbkr xfkq')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
