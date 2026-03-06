@@ -12,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ─────────────────────────────────────────────
 # SECURITY
 # ─────────────────────────────────────────────
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-dev-key')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-default-key-for-dev')
 
-# En production sur Render, DEBUG sera False automatiquement si configuré
+# Sur Render, passe DJANGO_DEBUG à False dans l'onglet Environment
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = [
@@ -33,9 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage', # Doit impérativement être avant staticfiles
-    'django.contrib.staticfiles',
-    'cloudinary',         # Bibliothèque de stockage
+    'django.contrib.staticfiles', # WhiteNoise s'occupe du reste
 
     'rest_framework',
     'corsheaders',
@@ -49,7 +47,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Indispensable pour Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -101,26 +99,16 @@ USE_I18N = True
 USE_TZ = True
 
 # ─────────────────────────────────────────────
-# STATIC & MEDIA FILES (Cloudinary Config)
+# STATIC & MEDIA FILES
 # ─────────────────────────────────────────────
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Utilisation de WhiteNoise pour servir les fichiers statiques
+# WhiteNoise gère les fichiers statiques (Admin CSS/JS) sans Cloudinary
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Configuration pour Cloudinary
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
-
-# Définition de Cloudinary comme stockage par défaut pour les images
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
+# Les médias sont maintenant gérés par des URLs directes (ImgBB, Google Drive)
 MEDIA_URL = '/media/'
-# MEDIA_ROOT reste défini pour le développement local
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ─────────────────────────────────────────────
@@ -134,7 +122,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     origin.strip() for origin in os.environ.get(
         'CORS_ALLOWED_ORIGINS',
-        'http://localhost:4200,https://mon-portfolio-rho-three.vercel.app'
+        'https://mon-portfolio-rho-three.vercel.app,http://localhost:4200'
     ).split(',')
     if origin.strip()
 ]
@@ -142,7 +130,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 # ─────────────────────────────────────────────
-# EMAIL CONFIG
+# EMAIL CONFIG (Pour ton formulaire de contact)
 # ─────────────────────────────────────────────
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
