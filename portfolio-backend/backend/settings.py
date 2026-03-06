@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 import mimetypes
+import dj_database_url  # Ajout de l'import pour PostgreSQL
 
 mimetypes.add_type("image/webp", ".webp", True)
 
@@ -80,13 +81,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 # ─────────────────────────────────────────────
-# DATABASE
+# DATABASE (Passage à PostgreSQL)
 # ─────────────────────────────────────────────
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        # Utilise ton PostgreSQL local si DATABASE_URL n'est pas trouvée
+        default='postgres://samuel:1234@localhost:5432/portfolio_db',
+        conn_max_age=600
+    )
 }
 
 # ─────────────────────────────────────────────
@@ -107,7 +109,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # WhiteNoise gère les fichiers statiques (Admin CSS/JS) sans Cloudinary
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Les médias sont maintenant gérés par des URLs directes (ImgBB, Google Drive)
+# Les médias sont gérés par des URLs directes (ImgBB, Google Drive)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
