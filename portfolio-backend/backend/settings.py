@@ -11,7 +11,12 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-default-key-fo
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 
 # Autoriser ton domaine Render
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.onrender.com', 'mon-portfolio-oxum.onrender.com']
+ALLOWED_HOSTS = [
+    'localhost', 
+    '127.0.0.1', 
+    '.onrender.com', 
+    'mon-portfolio-oxum.onrender.com'
+]
 
 # ─── APPLICATIONS INSTALLÉES ──────────────────────────────────────────────────
 INSTALLED_APPS = [
@@ -77,6 +82,9 @@ USE_TZ = True
 # ─── FICHIERS STATIQUES ───────────────────────────────────────────────────────
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Configuration WhiteNoise pour indexer les fichiers
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # ─── MEDIA ────────────────────────────────────────────────────────────────────
 MEDIA_URL = '/media/'
