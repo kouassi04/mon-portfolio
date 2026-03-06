@@ -32,6 +32,17 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/preload.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/magnific-popup.css",
+              "src/assets/css/owl.carousel.min.css",
+              "src/assets/css/all.min.css",
+              "src/assets/css/mobirise/style.css",
+              "src/assets/css/aos.css",
+              "src/assets/css/mono.css",
+              "src/assets/css/responsive.css",
+              "src/assets/css/dark.theme.css",
+              "src/assets/css/default.css",
               "src/styles.scss"
             ]
           },
@@ -45,8 +56,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "20kB"
                 }
               ],
               "outputHashing": "all"
